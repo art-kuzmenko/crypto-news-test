@@ -18,6 +18,7 @@ class Crypto_Price_Ticker_Plugin {
         add_action('init', [$this, 'register_assets']);
         add_action('admin_init', [$this, 'register_settings']);
         add_action('admin_menu', [$this, 'register_settings_page']);
+        add_action('wp_enqueue_scripts', function () { wp_enqueue_script('crypto-price-ticker-js'); }, 20);
 
         add_shortcode('crypto_price_ticker', [$this, 'render_shortcode']);
         add_action('wp_footer', [$this, 'render_footer_ticker']);
@@ -26,11 +27,8 @@ class Crypto_Price_Ticker_Plugin {
     public function register_assets() {
         $handle = 'crypto-price-ticker-js';
         $src = plugins_url('assets/ticker.js', __FILE__);
-        // Ensure Interactivity runtime is available and load as module
+        // Register script; depend on Interactivity runtime when available
         wp_register_script($handle, $src, ['wp-interactivity'], '1.0.0', true);
-        if (function_exists('wp_script_add_data')) {
-            wp_script_add_data($handle, 'type', 'module');
-        }
     }
 
     public function register_settings() {
