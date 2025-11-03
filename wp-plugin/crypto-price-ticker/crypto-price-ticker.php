@@ -71,7 +71,7 @@ class Crypto_Price_Ticker_Plugin {
 
         ob_start();
         ?>
-        <div data-wp-interactive="cryptoTicker" data-wp-context='<?php echo wp_json_encode($context); ?>' class="cpt-ticker" style="display:inline-flex;gap:.5rem;align-items:center; flex-direction: colum">
+        <div data-wp-interactive="cryptoTicker" data-wp-context='<?php echo wp_json_encode($context); ?>' class="cpt-ticker" style="display:inline-flex;gap:.5rem;align-items:center; flex-direction: column;">
             <?php if ($show_label) : ?>
                 <span data-wp-text="state.label">Loading...</span>
             <?php endif; ?>
