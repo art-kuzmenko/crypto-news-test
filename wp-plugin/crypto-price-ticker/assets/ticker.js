@@ -7,7 +7,7 @@
     }
     function ts(){
       const d = new Date();
-      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
     async function refreshForEl(el){
       try{
@@ -74,7 +74,7 @@
       },
       get updatedLabel(){
         if (!this.updatedAt) return '(updating...)';
-        return 'Updated ' + new Date(this.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        return 'Updated ' + new Date(this.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       }
     },
     actions: {
