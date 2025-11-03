@@ -19,10 +19,10 @@ npm start
 # API on http://localhost:3000
 
 Health check:
-url: http://localhost:3000/health
+http://localhost:3000/health
 
 Sample price:
-url: http://localhost:3000/price/bitcoin
+http://localhost:3000/price/bitcoin
 
 ### Docker
 
