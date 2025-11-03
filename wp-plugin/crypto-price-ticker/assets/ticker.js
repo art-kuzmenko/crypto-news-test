@@ -39,7 +39,7 @@
       }
     },
     effects: {
-      setup(){
+      init(){
         // Initial fetch and poll every minute
         this.actions.refreshPrice();
         const interval = setInterval(() => this.actions.refreshPrice(), 60 * 1000);

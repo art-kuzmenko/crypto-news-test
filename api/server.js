@@ -85,5 +85,3 @@ app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Crypto Price API listening on port ${port}`);
 });
-
-
