@@ -12,37 +12,38 @@
 
   store('cryptoTicker', {
     state: {
+      price: null,
+      symbol: '',
+      name: '',
       get label(){
         const ctx = this.context;
-        const symbol = this.symbol || '';
-        return (symbol ? symbol + ' ' : '') + '(' + (ctx?.id || 'coin') + ')';
+        const sym = this.symbol || '';
+        return (sym ? sym + ' ' : '') + '(' + (ctx?.id || 'coin') + ')';
       },
       get formattedPrice(){
         return this.price != null ? formatUsd(this.price) : '...';
       }
     },
     actions: {
-      async refreshPrice(){
-        const ctx = this.context;
-        if (!ctx || !ctx.id || !ctx.apiBase) return;
-        const url = ctx.apiBase.replace(/\/$/, '') + '/price/' + encodeURIComponent(ctx.id);
+      async refreshPrice({ context, state }){
+        if (!context || !context.id || !context.apiBase) return;
+        const url = context.apiBase.replace(/\/$/, '') + '/price/' + encodeURIComponent(context.id);
         try{
           const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
           if(!res.ok) throw new Error('Bad response');
           const data = await res.json();
-          this.price = data.price;
-          this.symbol = data.symbol;
-          this.name = data.name;
+          state.price = data.price;
+          state.symbol = (data.symbol || '').toUpperCase();
+          state.name = data.name || '';
         }catch(err){
-          // keep old price
+          // keep old state
         }
       }
     },
     effects: {
-      init(){
-        // Initial fetch and poll every minute
-        this.actions.refreshPrice();
-        const interval = setInterval(() => this.actions.refreshPrice(), 60 * 1000);
+      init({ actions }){
+        actions.refreshPrice();
+        const interval = setInterval(actions.refreshPrice, 60 * 1000);
         return () => clearInterval(interval);
       }
     }
