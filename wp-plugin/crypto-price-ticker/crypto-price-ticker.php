@@ -27,8 +27,8 @@ class Crypto_Price_Ticker_Plugin {
     public function register_assets() {
         $handle = 'crypto-price-ticker-js';
         $src = plugins_url('assets/ticker.js', __FILE__);
-        // Register script; depend on Interactivity runtime when available
-        wp_register_script($handle, $src, ['wp-interactivity'], '1.0.0', true);
+        // Register script in HEAD (in case theme lacks wp_footer()) and without extra deps
+        wp_register_script($handle, $src, [], '1.0.0', false);
     }
 
     public function register_settings() {
