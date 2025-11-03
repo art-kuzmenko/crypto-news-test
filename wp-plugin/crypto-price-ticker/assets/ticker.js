@@ -21,9 +21,11 @@
         const labelEl = el.querySelector('[data-wp-text="state.label"]');
         const priceEl = el.querySelector('[data-wp-text="state.formattedPrice"]');
         const updEl = el.querySelector('[data-wp-text="state.updatedLabel"]');
+        const iconEl = el.querySelector('img[data-cpt-icon]');
         if (labelEl) labelEl.textContent = (data.symbol ? data.symbol.toUpperCase() + ' ' : '') + '(' + (ctx.id || 'coin') + ')';
         if (priceEl) priceEl.textContent = formatUsd(data.price);
         if (updEl) updEl.textContent = 'Updated ' + ts();
+        if (iconEl && data.image) iconEl.src = data.image;
       }catch(_e){ /* noop */ }
     }
     function initFallback(){
@@ -64,6 +66,7 @@
       symbol: '',
       name: '',
       updatedAt: 0,
+      imageUrl: '',
       get label(){
         const ctx = this.context;
         const sym = this.symbol || '';
@@ -88,6 +91,7 @@
           state.price = data.price;
           state.symbol = (data.symbol || '').toUpperCase();
           state.name = data.name || '';
+          state.imageUrl = data.image || '';
           state.updatedAt = Date.now();
         }catch(err){
           // keep old state

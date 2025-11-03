@@ -35,6 +35,7 @@ async function fetchCoinData(coinId) {
     name: coin.name,
     symbol: coin.symbol.toUpperCase(),
     price,
+    image: coin?.image?.small || coin?.image?.thumb || null,
     currency: 'USD'
   };
 }
