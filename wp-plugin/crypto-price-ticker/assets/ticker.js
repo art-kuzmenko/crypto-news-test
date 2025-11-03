@@ -5,6 +5,10 @@
       try { return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 8 }).format(n); }
       catch(e){ return '$' + (Math.round(n * 100) / 100); }
     }
+    function ts(){
+      const d = new Date();
+      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
     async function refreshForEl(el){
       try{
         const ctxStr = el.getAttribute('data-wp-context') || '{}';
@@ -16,8 +20,10 @@
         const data = await res.json();
         const labelEl = el.querySelector('[data-wp-text="state.label"]');
         const priceEl = el.querySelector('[data-wp-text="state.formattedPrice"]');
+        const updEl = el.querySelector('[data-wp-text="state.updatedLabel"]');
         if (labelEl) labelEl.textContent = (data.symbol ? data.symbol.toUpperCase() + ' ' : '') + '(' + (ctx.id || 'coin') + ')';
         if (priceEl) priceEl.textContent = formatUsd(data.price);
+        if (updEl) updEl.textContent = 'Updated ' + ts();
       }catch(_e){ /* noop */ }
     }
     function initFallback(){
@@ -57,6 +63,7 @@
       price: null,
       symbol: '',
       name: '',
+      updatedAt: 0,
       get label(){
         const ctx = this.context;
         const sym = this.symbol || '';
@@ -64,6 +71,10 @@
       },
       get formattedPrice(){
         return this.price != null ? formatUsd(this.price) : '...';
+      },
+      get updatedLabel(){
+        if (!this.updatedAt) return '(updating...)';
+        return 'Updated ' + new Date(this.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
       }
     },
     actions: {
@@ -77,6 +88,7 @@
           state.price = data.price;
           state.symbol = (data.symbol || '').toUpperCase();
           state.name = data.name || '';
+          state.updatedAt = Date.now();
         }catch(err){
           // keep old state
         }

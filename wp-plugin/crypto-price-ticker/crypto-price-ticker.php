@@ -71,11 +71,12 @@ class Crypto_Price_Ticker_Plugin {
 
         ob_start();
         ?>
-        <div data-wp-interactive="cryptoTicker" data-wp-context='<?php echo wp_json_encode($context); ?>' class="cpt-ticker" style="display:inline-flex;gap:.5rem;align-items:center;">
+        <div data-wp-interactive="cryptoTicker" data-wp-context='<?php echo wp_json_encode($context); ?>' class="cpt-ticker" style="display:inline-flex;gap:.5rem;align-items:center; flex-direction: column;">
             <?php if ($show_label) : ?>
                 <span data-wp-text="state.label">Loading...</span>
             <?php endif; ?>
             <strong data-wp-text="state.formattedPrice">$0.00</strong>
+            <em data-wp-text="state.updatedLabel" style="opacity:.7;font-style:normal;">(updating...)</em>
         </div>
         <?php
         return ob_get_clean();
