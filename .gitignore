@@ -1,0 +1,14 @@
+# Node artifacts
+node_modules/
+**/node_modules/
+
+# NPM lockfiles (exclude from repo as requested)
+package-lock.json
+**/package-lock.json
+
+# Logs / OS files
+npm-debug.log*
+*.log
+.DS_Store
+
+

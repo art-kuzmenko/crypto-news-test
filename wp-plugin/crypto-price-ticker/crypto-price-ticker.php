@@ -87,10 +87,6 @@ class Crypto_Price_Ticker_Plugin {
         return $this->render_markup($atts['id'], true);
     }
 
-    public function render_footer_ticker() {
-        // Example: always show Bitcoin ticker in footer; themes can remove this action if undesired
-        echo $this->render_markup('bitcoin', true);
-    }
 }
 
 new Crypto_Price_Ticker_Plugin();
